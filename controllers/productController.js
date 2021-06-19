@@ -1,28 +1,18 @@
 const productService = require('../services/productService');
+const { code201, code500, message } = require('../utils/dictionary');
 
 const saveFilter = async (request, response) => {
-  const { filter } = request.body;
+  const { web, category, searchTerm, results } = request.body;
+  const filter = { web, category, searchTerm, results }
 
-  const status = await productService.saveFilter(filter);
+  const insertedId = await productService.saveFilter(filter);
 
-  if (!status) {
-    return response.status(400).json({ message: 'Erro no salvamento'});
+  if (!insertedId) {
+    return response.status(code500).json({ message: message.internalError });
   }
 
-  return response.status(201).json({ message: 'resultado da busca salvo com sucesso'});
+  return response.status(code201).json({ message: message.filterSaved });
 };
-
-// const setEnviroment = async (request, response) => {
-//   return response.status(200).json(categories);
-// };
-
-// const searchProduct = async (request, response) => {
-//   const { web, searchTerm } = request.body;
-
-//   const products = await productService.searchProduct(web, searchTerm);
-
-//   await response.status(200).json(products);
-// };
 
 module.exports = {
   saveFilter,
