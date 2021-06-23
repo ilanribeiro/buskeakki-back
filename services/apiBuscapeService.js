@@ -5,8 +5,6 @@ const { JSDOM } = jsdom;
 const buscapeBaseUrl= 'https://www.buscape.com.br/search?q=';
 
 const getProducts = async (category, searchTerm) => {
-  console.log(`category no getProducts: `, category)
-  console.log(`searchTerm no getProducts: `, searchTerm)
 
   const response = await got(`${buscapeBaseUrl}${category}+${searchTerm}`);
   const dom = new JSDOM(response.body, {
@@ -33,12 +31,10 @@ const getProducts = async (category, searchTerm) => {
 
   priceList.forEach((link, index) => {
     let stringPrice = link.innerHTML.toString();
-    // let separatedNumberPrice = stringPrice.split(' ')[1]
-    let priceWithoutPoint = stringPrice.replace(/[^\d]+/g, '');
-    products[index].price = priceWithoutPoint;
+    let priceOnlyNumbers = stringPrice.replace(/[^\d]+/g, '');
+    products[index].price = priceOnlyNumbers;
   });
 
-  // console.log(`products no Service: `, products)
 	return products;
 };
 
