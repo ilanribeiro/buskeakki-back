@@ -7,6 +7,7 @@ const code500 = 500;
 
 const message = {
   filterSaved: 'Filtro de busca salvo com sucesso',
+  fieldNotExist: 'Os campos categoria e pesquisa devem estar preenchidos',
   internalError: 'Erro interno',
 };
 
